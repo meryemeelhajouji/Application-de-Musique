@@ -5,7 +5,7 @@ function BottomNav() {
   return (
       <View style={styles.container}>
         <Ionicons name='heart' color='red' size={30}/>
-        <Text>button BottomNav  </Text>
+        <Text>button BottomNav</Text>
       </View>
   )
 }
