@@ -4,16 +4,14 @@ import {
   View,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
-  Dimensions,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
+import BottomNav from '../component/BottomNav';
 
-const {width, height} = Dimensions.get('window');
-
-function Home() {
+function Home({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.maincontainer}>
@@ -69,28 +67,13 @@ function Home() {
             <Ionicons
               name="play-skip-forward-outline"
               color="white"
-              size={30}
+              size={35}
             />
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <View style={styles.buttonIconWrapper}>
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons name="home-outline" color="#00ffff" size={30} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons name="musical-notes" color="white" size={30} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons name="heart-outline" color="white" size={30} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons name="ellipsis-horizontal" color="white" size={30} />
-          </TouchableOpacity>
-        </View>
-      </View>
+      <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -107,22 +90,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonContainer: {
-    width: width,
-    alignItems: 'center',
-    paddingVertical: 15,
-    borderTopColor: '#393E46',
-    borderWidth: 1,
-  },
-  buttonIconWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-  },
 
   imageWrapper: {
-    width: 220,
-    height: 280,
+    width: 300,
+    height: 350,
     marginBottom: 25,
   },
   musicImage: {
