@@ -13,10 +13,9 @@ console.log(rootPath);
 function AllMusic({navigation}) {
   const [musicFiles, setMusicFiles] = useState([]);
 
-  // async function fetchMusic() {
-  //   const response = await GetListMusic();
-  //   setMusicFiles(response);
-  //   console.log(response);
+  // async function playMusic() {
+  //   navigation.navigate('PlayMusic');
+
   // }
 
   useEffect(() => {
@@ -36,11 +35,11 @@ function AllMusic({navigation}) {
             source={require('../assets/img/images.jpg')}
             style={styles.image}
           />
-          <View>
+          <TouchableOpacity onPress={() => navigation.navigate("PlayMusic", { key:data.id})}>
             <Text style={styles.songTitle}>{data.title}</Text>
             <Text style={styles.nameArtist}>Name Of Artist: unconnu</Text>
-          </View>
-          <TouchableOpacity onPress={() => {}}>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Ionicons name="ellipsis-horizontal" color="white" size={30} />
           </TouchableOpacity>
         </View>

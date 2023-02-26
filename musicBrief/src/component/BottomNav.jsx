@@ -13,10 +13,10 @@ function BottomNav({navigation}) {
   return (
     <View style={styles.buttonContainer}>
       <View style={styles.buttonIconWrapper}>
-        <TouchableOpacity onPress={() => navigation.navigate('AllMusic')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
           <Ionicons name="home-outline" color="#00ffff" size={30} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.navigate('AllMusic')}>
           <Ionicons name="musical-notes" color="white" size={30} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>

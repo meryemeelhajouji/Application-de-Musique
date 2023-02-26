@@ -9,6 +9,7 @@ export const ListMusic = () => {
           list.push({
             url: contents[content]['path'],
             title: contents[content]['name'],
+            id: content,
           });
         }
       }
