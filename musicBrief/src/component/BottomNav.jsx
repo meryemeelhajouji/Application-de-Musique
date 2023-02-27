@@ -19,8 +19,8 @@ function BottomNav({navigation}) {
         <TouchableOpacity onPress={() => navigation.navigate('AllMusic')}>
           <Ionicons name="musical-notes" color="white" size={30} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}}>
-          <Ionicons name="heart-outline" color="white" size={30} />
+        <TouchableOpacity onPress={() => navigation.navigate('Lyrics')}>
+          <Ionicons name="ios-list-outline" color="white" size={30} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}}>
           <Ionicons name="ellipsis-horizontal" color="white" size={30} />

@@ -10,17 +10,19 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
 import BottomNav from '../component/BottomNav';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, {useProgress} from 'react-native-track-player';
 import {ListMusic} from '../utils/ListMusic';
 
 function PlayMusic({navigation, route}) {
+  const [play, setPlayer] = useState(false);
+  const progress = useProgress();
   useEffect(() => {
     const music = async () => {
       let l = await ListMusic();
-
       try {
         const {key} = route.params;
         TrackPlayer.setupPlayer();
+        setPlayer(true);
 
         l.forEach(async r => {
           await TrackPlayer.add(r);
@@ -37,6 +39,11 @@ function PlayMusic({navigation, route}) {
 
   const pauseTrack = async () => {
     await TrackPlayer.pause();
+    setPlayer(false);
+  };
+  const playTrack = async () => {
+    await TrackPlayer.play();
+    setPlayer(true);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -66,9 +73,9 @@ function PlayMusic({navigation, route}) {
         <View>
           <Slider
             style={styles.progressBar}
-            value={10}
+            value={progress.position}
             minimumValue={0}
-            maximumValue={100}
+            maximumValue={progress.duration}
             thumbTintColor="#00ffff"
             minimumTrackTintColor="#00ffff"
             maximumTrackTintColor="#fff"
@@ -76,8 +83,8 @@ function PlayMusic({navigation, route}) {
           />
           {/* music progress duratuion */}
           <View style={styles.progressDuration}>
-            <Text style={styles.progressText}> 00:00</Text>
-            <Text style={styles.progressText}> 00:00</Text>
+            <Text style={styles.progressText}>{progress.position}</Text>
+            <Text style={styles.progressText}>{progress.duration}</Text>
           </View>
         </View>
 
@@ -86,9 +93,22 @@ function PlayMusic({navigation, route}) {
           <TouchableOpacity>
             <Ionicons name="play-skip-back-outline" color="white" size={35} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={pauseTrack}>
+          {}
+          <View>
+            {play && (
+              <TouchableOpacity onPress={pauseTrack}>
+                <Ionicons name="ios-pause-circle" color="white" size={75} />
+              </TouchableOpacity>
+            )}
+            {!play && (
+              <TouchableOpacity onPress={playTrack}>
+                <Ionicons name="play-circle-sharp" color="white" size={75} />
+              </TouchableOpacity>
+            )}
+            {/* <TouchableOpacity onPress={pauseTrack}>
             <Ionicons name="ios-pause-circle" color="white" size={75} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          </View>
           <TouchableOpacity onPress={() => {}}>
             <Ionicons
               name="play-skip-forward-outline"
