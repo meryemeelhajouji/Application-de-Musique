@@ -20,7 +20,6 @@ function AllMusic({navigation}) {
 
   useEffect(() => {
     ListMusic().then(res => {
-      console.log(res);
       setMusicFiles(res);
     });
   }, []);
@@ -35,7 +34,8 @@ function AllMusic({navigation}) {
             source={require('../assets/img/images.jpg')}
             style={styles.image}
           />
-          <TouchableOpacity onPress={() => navigation.navigate("PlayMusic", { key:data.id})}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('PlayMusic', {key: data.id})}>
             <Text style={styles.songTitle}>{data.title}</Text>
             <Text style={styles.nameArtist}>Name Of Artist: unconnu</Text>
           </TouchableOpacity>

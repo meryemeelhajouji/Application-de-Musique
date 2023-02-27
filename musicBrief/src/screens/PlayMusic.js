@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -14,28 +14,30 @@ import TrackPlayer from 'react-native-track-player';
 import {ListMusic} from '../utils/ListMusic';
 
 function PlayMusic({navigation, route}) {
-  // TrackPlayer.add(ListMusic());
-  // TrackPlayer.skip(parseInt(key?.key));
-  // TrackPlayer.play();
-  // SetisPlaying(true);
-  const music = async () => {
-    try {
-      const {key} = route.params;
-      TrackPlayer.setupPlayer();
-      TrackPlayer.add(await ListMusic());
+  useEffect(() => {
+    const music = async () => {
+      let l = await ListMusic();
 
-      console.log('oum' + key);
-      TrackPlayer.skip(parseInt(key));
-      TrackPlayer.play();
-    } catch (error) {
-      console.error('Error initializing track player:', error);
-    }
-    console.log('hoho');
+      try {
+        const {key} = route.params;
+        TrackPlayer.setupPlayer();
 
-    console.log(await ListMusic());
+        l.forEach(async r => {
+          await TrackPlayer.add(r);
+        });
+        await TrackPlayer.skip(key);
+        await TrackPlayer.play();
+        // console.log('hh');
+      } catch (error) {
+        console.error('Error initializing track player:', error);
+      }
+    };
+    music();
+  }, []);
+
+  const pauseTrack = async () => {
+    await TrackPlayer.pause();
   };
-
-  music();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.maincontainer}>
@@ -81,10 +83,10 @@ function PlayMusic({navigation, route}) {
 
         {/* music controler */}
         <View style={styles.musicControler}>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity>
             <Ionicons name="play-skip-back-outline" color="white" size={35} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={pauseTrack}>
             <Ionicons name="ios-pause-circle" color="white" size={75} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
