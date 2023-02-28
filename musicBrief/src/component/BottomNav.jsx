@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
-function BottomNav({navigation}) {
+function BottomNav() {
+  const navigation = useNavigation();
   return (
     <View style={styles.buttonContainer}>
       <View style={styles.buttonIconWrapper}>

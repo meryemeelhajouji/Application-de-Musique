@@ -31,12 +31,16 @@ function Lyrics({navigation}) {
       const lyricsResponse = await fetch(lyricsUrl);
       const lyricsHtml = await lyricsResponse.text();
       const $ = cheerio.load(lyricsHtml);
-      const headings = $('.Lyrics__Container-sc-1ynbvzw-6');
-      headings.each((index, element) => {
-        console.log($(element).text());
-        setLyrics($(element).text());
-      });
-     
+      const headings = $('.Lyrics__Container-sc-1ynbvzw-6').text();
+      console.log('headings', headings);
+      setLyrics(headings);
+      // headings.each((index, element) => {
+      //   console.log($(element).text());
+      //   console.log('$(element).text()');
+
+      //   setLyrics($(element).text());
+      // });
+
       // console.log('hi', lyrics);
     } catch (error) {
       console.error(error);
@@ -48,21 +52,19 @@ function Lyrics({navigation}) {
 
   const {width} = useWindowDimensions();
   return (
-    // <ScrollView>
-    <View style={styles.container}>
-      <Text>hello this is lyrics</Text>
-      <View>
-        {/* <HTML source={{ html: lyrics }} /> */}
-        {/* <RenderHtml contentWidth={width} source={{html: lyrics}} /> */}
-        <Text>{Mlyrics}</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text>hello this is lyrics fffff</Text>
+        <View>
+          <Text style={styles.lyricsStyle}>{Mlyrics}</Text>
+        </View>
+
+        <View style={styles.maincontainer}></View>
+
+        <BottomNav navigation={navigation} />
+        <View />
       </View>
-
-      <View style={styles.maincontainer}></View>
-
-      <BottomNav navigation={navigation} />
-      <View />
-    </View>
-    // </ScrollView>
+    </ScrollView>
   );
 }
 
@@ -74,5 +76,11 @@ const styles = StyleSheet.create({
   },
   maincontainer: {
     flex: 1,
+  },
+  lyricsStyle: {
+    textAlign: 'center',
+    color: '#EEEEEE',
+    fontSize: 25,
+    fontWeight: '300',
   },
 });

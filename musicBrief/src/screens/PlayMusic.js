@@ -15,14 +15,18 @@ import {ListMusic} from '../utils/ListMusic';
 
 function PlayMusic({navigation, route}) {
   const [play, setPlayer] = useState(false);
+  const [trackPlayerInitialized, setTrackPlayerInitialized] = useState(false);
   const progress = useProgress();
   useEffect(() => {
     const music = async () => {
       let l = await ListMusic();
       try {
         const {key} = route.params;
-        TrackPlayer.setupPlayer();
-        setPlayer(true);
+        if (!trackPlayerInitialized) {
+          await TrackPlayer.setupPlayer();
+          setPlayer(true);
+          setTrackPlayerInitialized(true);
+        }
 
         l.forEach(async r => {
           await TrackPlayer.add(r);
@@ -35,7 +39,7 @@ function PlayMusic({navigation, route}) {
       }
     };
     music();
-  }, []);
+  }, [trackPlayerInitialized]);
 
   const pauseTrack = async () => {
     await TrackPlayer.pause();
