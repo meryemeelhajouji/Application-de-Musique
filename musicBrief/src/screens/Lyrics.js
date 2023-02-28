@@ -3,13 +3,14 @@ import React, {useState, useEffect} from 'react';
 import BottomNav from '../component/BottomNav';
 import {useWindowDimensions} from 'react-native';
 import axios from 'axios';
+import cheerio from 'cheerio';
 
 import RenderHtml from 'react-native-render-html';
 
 function Lyrics({navigation}) {
   const token =
-    'yOlxjh0Y5l7kbOyhT7okLNk-kDTWA5dKVq5Pj2QF0zUdEf54cVQbAycVYaJxyzBK';
-  const [lyrics, setLyrics] = useState('');
+    'uoHR-HQhc0ktGpfaBzfw6Exc5IY96RaN5LIl_9tEoOTZZkkbZCvxur3j8bUhMDyX';
+  const [Mlyrics, setLyrics] = useState('');
   // song lyrics
   const getSongLyrics = async (songTitle, artistName) => {
     try {
@@ -20,18 +21,23 @@ function Lyrics({navigation}) {
         },
       });
       const songId = searchResponse.data.response.hits[0].result.id;
-      const lyricsUrl = `https://api.genius.com/songs/${songId}`;
-      const lyricsResponse = await axios.get(lyricsUrl, {
+      const response = await fetch(`https://api.genius.com/songs/${songId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      const lyricsSong = lyricsResponse.data.response.song.url;
-      const response = await fetch(lyricsSong);
-      const song = await response.text();
-      // console.log(lyricsSong);
-      setLyrics(song);
-      // console.log(lyrics);
+      const json = await response.json();
+      const lyricsUrl = json.response.song.url;
+      const lyricsResponse = await fetch(lyricsUrl);
+      const lyricsHtml = await lyricsResponse.text();
+      const $ = cheerio.load(lyricsHtml);
+      const headings = $('.Lyrics__Container-sc-1ynbvzw-6');
+      headings.each((index, element) => {
+        console.log($(element).text());
+        setLyrics($(element).text());
+      });
+     
+      // console.log('hi', lyrics);
     } catch (error) {
       console.error(error);
     }
@@ -42,20 +48,21 @@ function Lyrics({navigation}) {
 
   const {width} = useWindowDimensions();
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text>hello this is lyrics</Text>
-        <View>
-          {/* <HTML source={{ html: lyrics }} /> */}
-          <RenderHtml contentWidth={width} source={{html: lyrics}} />
-        </View>
-
-        <View style={styles.maincontainer}></View>
-
-        <BottomNav navigation={navigation} />
-        <View />
+    // <ScrollView>
+    <View style={styles.container}>
+      <Text>hello this is lyrics</Text>
+      <View>
+        {/* <HTML source={{ html: lyrics }} /> */}
+        {/* <RenderHtml contentWidth={width} source={{html: lyrics}} /> */}
+        <Text>{Mlyrics}</Text>
       </View>
-    </ScrollView>
+
+      <View style={styles.maincontainer}></View>
+
+      <BottomNav navigation={navigation} />
+      <View />
+    </View>
+    // </ScrollView>
   );
 }
 
