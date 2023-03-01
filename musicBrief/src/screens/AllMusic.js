@@ -35,7 +35,7 @@ function AllMusic({navigation}) {
             style={styles.image}
           />
           <TouchableOpacity
-            onPress={() => navigation.navigate('PlayMusic', {key: data.id})}>
+            onPress={() => navigation.navigate('PlayMusic', {key: data.id , name: data.title})}>
             <Text style={styles.songTitle}>{data.title}</Text>
             <Text style={styles.nameArtist}>Name Of Artist: unconnu</Text>
           </TouchableOpacity>

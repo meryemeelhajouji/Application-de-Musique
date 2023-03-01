@@ -7,7 +7,12 @@ import cheerio from 'cheerio';
 
 import RenderHtml from 'react-native-render-html';
 
-function Lyrics({navigation}) {
+function Lyrics({navigation, route}) {
+  const {song} = route.params; 
+  const {artist} = route.params; 
+  
+
+  console.log('song', song);
   const token =
     'uoHR-HQhc0ktGpfaBzfw6Exc5IY96RaN5LIl_9tEoOTZZkkbZCvxur3j8bUhMDyX';
   const [Mlyrics, setLyrics] = useState('');
@@ -34,27 +39,22 @@ function Lyrics({navigation}) {
       const headings = $('.Lyrics__Container-sc-1ynbvzw-6').text();
       console.log('headings', headings);
       setLyrics(headings);
-      // headings.each((index, element) => {
-      //   console.log($(element).text());
-      //   console.log('$(element).text()');
-
-      //   setLyrics($(element).text());
-      // });
-
-      // console.log('hi', lyrics);
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
-    getSongLyrics('lonely', 'akon');
+    getSongLyrics(song , artist);
   }, []);
 
   const {width} = useWindowDimensions();
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text>hello this is lyrics fffff</Text>
+        <Text style={styles.title}>Lyrics Song </Text>
+     
+
+
         <View>
           <Text style={styles.lyricsStyle}>{Mlyrics}</Text>
         </View>
@@ -79,8 +79,22 @@ const styles = StyleSheet.create({
   },
   lyricsStyle: {
     textAlign: 'center',
+    marginTop: 50,
     color: '#EEEEEE',
     fontSize: 25,
     fontWeight: '300',
   },
+  title: {
+    textAlign: 'center',
+    color: '#EEEEEE',
+    fontSize: 30,
+    fontWeight: '600',
+  },
+  // song: {
+  //   marginTop: 8,
+  //   marginLeft: 8,
+  //   color: '#EEEEEE',
+  //   fontSize: 18,
+  //   fontWeight: '300',
+  // },
 });

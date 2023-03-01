@@ -15,19 +15,27 @@ import {ListMusic} from '../utils/ListMusic';
 
 function PlayMusic({navigation, route}) {
   const [play, setPlayer] = useState(false);
+  const [song, setSong] = useState();
+  const [artist, setArtist] = useState();
+
+
   const [trackPlayerInitialized, setTrackPlayerInitialized] = useState(false);
   const progress = useProgress();
   useEffect(() => {
     const music = async () => {
       let l = await ListMusic();
       try {
-        const {key} = route.params;
-        if (!trackPlayerInitialized) {
-          await TrackPlayer.setupPlayer();
-          setPlayer(true);
-          setTrackPlayerInitialized(true);
-        }
+        const {key} = route.params; 
+        const {name} = route.params; 
 
+        const [valeur1, valeur2] = name.split('_');
+        const [valeur3, valeur4] = valeur2.split('.');
+
+        // console.log(valeur3);
+        TrackPlayer.setupPlayer();
+        setPlayer(true);
+        setArtist(valeur1);
+        setSong(valeur3);
         l.forEach(async r => {
           await TrackPlayer.add(r);
         });
@@ -39,7 +47,7 @@ function PlayMusic({navigation, route}) {
       }
     };
     music();
-  }, [trackPlayerInitialized]);
+  }, []);
 
   const pauseTrack = async () => {
     await TrackPlayer.pause();
@@ -64,11 +72,11 @@ function PlayMusic({navigation, route}) {
         <View>
           <Text style={[styles.songContent, styles.songTitle]}>
             {' '}
-            Song Title
+         {song} 
           </Text>
           <Text style={[styles.songContent, styles.songArist]}>
             {' '}
-            Name Artist
+           {artist}
           </Text>
         </View>
 
@@ -121,6 +129,12 @@ function PlayMusic({navigation, route}) {
             />
           </TouchableOpacity>
         </View>
+      </View>
+      <View style={styles.lyrics}>
+        <TouchableOpacity
+         onPress={() => navigation.navigate('Lyrics', {song: song , artist: artist})}>
+          <Ionicons name="ios-list-outline" color="white" size={30} />
+        </TouchableOpacity>
       </View>
 
       <BottomNav navigation={navigation} />
@@ -194,5 +208,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '60%',
     marginTop: 15,
+  },
+  lyrics: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 });
