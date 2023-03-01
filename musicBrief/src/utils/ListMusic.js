@@ -16,20 +16,5 @@ export const ListMusic = async () => {
       url: e.path,
     };
   });
-  // .then(
-  //   contents => {
-  //  console.log(contents);
-  //     for (let content in contents) {
 
-  //       if (contents[content]['name'].endsWith('.mp3')) {
-  //         list.push({
-  //           url: contents[content]['path'],
-  //           title: contents[content]['name'],
-  //           id: content,
-  //         });
-  //       }
-  //     }
-  //     return list;
-  //   },
-  // );
 };

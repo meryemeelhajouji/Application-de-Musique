@@ -62,9 +62,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
+    textAlign: 'center',
     fontWeight: '600',
     color: '#EEEEEE',
+    marginTop: 10,
   },
   listContainer: {
     flexDirection: 'row',

@@ -17,10 +17,8 @@ function PlayMusic({navigation, route}) {
   const [play, setPlayer] = useState(false);
   const [song, setSong] = useState();
   const [artist, setArtist] = useState();
-
-
-  const [trackPlayerInitialized, setTrackPlayerInitialized] = useState(false);
   const progress = useProgress();
+  
   useEffect(() => {
     const music = async () => {
       let l = await ListMusic();
@@ -30,8 +28,7 @@ function PlayMusic({navigation, route}) {
 
         const [valeur1, valeur2] = name.split('_');
         const [valeur3, valeur4] = valeur2.split('.');
-
-        // console.log(valeur3);
+        
         TrackPlayer.setupPlayer();
         setPlayer(true);
         setArtist(valeur1);
